@@ -1,0 +1,28 @@
+.home {
+  margin: 2rem 0;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.list li {
+  margin: 1rem 0;
+}
+
+.domainRow {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.domainRow button:first-child {
+  flex-grow: 1;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

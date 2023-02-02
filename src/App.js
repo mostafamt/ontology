@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Provider, useSelector } from "react-redux";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ButtonAppBar from "./components/Appbar/ButtonAppBar";
+import Home from "./pages/Home/Home";
+import { store } from "./store/store";
+
+const initialDomains = ["Physics", "Biology", "Mathematics"];
 
 function App() {
+  const [domains, setDomains] = React.useState(initialDomains);
+
+  const updateDomains = (domain, id) => {
+    const prevDomains = [...domains];
+    prevDomains.splice(id, 1, domain);
+    setDomains(prevDomains);
+  };
+
+  const deleteDomain = (id) => {
+    const prevDomains = [...domains];
+    prevDomains.splice(id, 1);
+    setDomains(prevDomains);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <BrowserRouter>
+        <ButtonAppBar />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home updateDomains={updateDomains} deleteDomain={deleteDomain} />
+            }
+          />
+          {/* <Route path="/domains/:domain" element={<Domain />} /> */}
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
