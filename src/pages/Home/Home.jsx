@@ -1,6 +1,5 @@
 import { Button, Container } from "@mui/material";
 import React from "react";
-import Domain from "./Domain";
 
 import style from "./home.module.css";
 import Modal from "../../components/Modal/Modal";
@@ -10,77 +9,64 @@ import { useSelector } from "react-redux";
 
 import AddIcon from "@mui/icons-material/Add";
 import DomainCreate from "../../components/DomainCreate/DomainCreate";
+import DomainRow from "../../components/DomainRow/DomainRow";
 
-const Home = ({ updateDomains, deleteDomain }) => {
-  const [selectedDomainId, setSelectedDomainId] = React.useState(-1);
-  const [selectedDomainValue, setSelectedDomainValue] = React.useState("");
+export const ADD_DOMAIN = "ADD_DOMAIN";
+export const UPDATE_DOMAIN = "UPDATE_DOMAIN";
+export const DELETE_DOMAIN = "DELETE_DOMAIN";
+
+const Home = () => {
   const [open, setOpen] = React.useState(false);
-  const [updateDelete, setUpdateDelete] = React.useState(true);
-  const [addDomain, setAddDomain] = React.useState(false);
+  const [modalType, setModalType] = React.useState(ADD_DOMAIN);
 
   const domains = useSelector((state) => state.domain.domains);
 
-  const handleOpen = (id) => {
+  const handleOpen = () => {
     setOpen(true);
-    setSelectedDomainId(id);
-    setSelectedDomainValue(domains[id]);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const updateDomain = (domain, id) => {
-    updateDomains(domain, id);
-    handleClose();
-  };
-
-  const OnDeleteDomain = () => {
-    deleteDomain(selectedDomainId);
-    handleClose();
-  };
+  let modalContent, title;
+  if (modalType === ADD_DOMAIN) {
+    modalContent = <DomainCreate handleClose={handleClose} />;
+    title = "add domain";
+  } else if (modalType === UPDATE_DOMAIN) {
+    modalContent = <DomainUpdate handleClose={handleClose} />;
+    title = "update domain";
+  } else {
+    modalContent = <DomainDelete handleClose={handleClose} />;
+    title = "delete domain";
+  }
 
   return (
     <div className={style.home}>
       <Container maxWidth="md">
-        {addDomain && (
-          <Modal open={true} setOpen={setOpen} title={"add new domain"}>
-            <DomainCreate />
-          </Modal>
-        )}
-        <Modal
-          open={open}
-          setOpen={setOpen}
-          title={updateDelete ? "update domain" : "Delete Domain"}
-        >
-          {updateDelete ? (
-            <DomainUpdate
-              selectedDomainValue={selectedDomainValue}
-              setSelectedDomainValue={setSelectedDomainValue}
-              updateDomain={updateDomain}
-              handleClose={handleClose}
-            />
-          ) : (
-            <DomainDelete
-              handleClose={handleClose}
-              deleteDomain={OnDeleteDomain}
-            />
-          )}
+        <Modal open={open} handleClose={handleClose} title={title}>
+          {modalContent}
         </Modal>
         <div className={style.header}>
           <h1>Domains</h1>
-          <Button startIcon={<AddIcon />}>add new domain</Button>
+          <Button
+            startIcon={<AddIcon />}
+            onClick={() => {
+              setOpen(true);
+              setModalType(ADD_DOMAIN);
+            }}
+          >
+            add new domain
+          </Button>
         </div>
         <ul className={style.list}>
           {domains.map((domain, id) => (
             <li key={id}>
-              <Domain
-                domainId={id}
-                domainName={domain}
+              <DomainRow
+                id={id}
+                name={domain}
                 openModal={handleOpen}
-                setSelectedDomainValue={setSelectedDomainValue}
-                setUpdateDelete={setUpdateDelete}
-                setSelectedDomainId={setSelectedDomainId}
+                setModalType={setModalType}
               />
             </li>
           ))}

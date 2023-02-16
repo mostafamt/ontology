@@ -1,0 +1,15 @@
+.addButton {
+  cursor: pointer;
+  height: 2rem;
+  border: none;
+}
+
+.addButton svg {
+  width: 1.6rem;
+  height: 2rem;
+}
+
+.deleteButton {
+  height: 2rem;
+  border: none;
+}

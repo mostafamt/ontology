@@ -4,18 +4,14 @@ import Header from "./Header";
 
 import style from "./style.module.css";
 
-const Modal = ({ open, setOpen, title, children }) => {
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+const Modal = ({ open, handleClose, title, children }) => {
   return (
     <div
       style={{
         display: open ? "block" : "none",
       }}
     >
-      <div className={style.backdrop} onClick={() => setOpen(false)}></div>
+      <div className={style.backdrop} onClick={handleClose}></div>
 
       <div className={style.modal}>
         <Header title={title} handleClose={handleClose} />

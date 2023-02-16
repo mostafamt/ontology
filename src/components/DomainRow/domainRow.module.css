@@ -1,0 +1,9 @@
+.domainRow {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.domainRow button:first-child {
+  flex-grow: 1;
+}

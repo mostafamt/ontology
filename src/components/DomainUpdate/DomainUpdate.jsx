@@ -9,7 +9,6 @@ const DomainUpdate = ({
   selectedDomainId,
   selectedDomainValue,
   setSelectedDomainValue,
-  updateDomain,
   handleClose,
 }) => {
   const dispatch = useDispatch();

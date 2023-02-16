@@ -3,40 +3,32 @@ import React from "react";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import styles from "./home.module.css";
+import styles from "./domainRow.module.css";
 import { useDispatch } from "react-redux";
 import { setSelectedDomain } from "../../store/actions/domainActions";
+import { DELETE_DOMAIN, UPDATE_DOMAIN } from "../../pages/Home/Home";
+import { useNavigate } from "react-router-dom";
 
-const Domain = ({
-  domainId,
-  domainName,
-  openModal,
-  setSelectedDomainValue,
-  setUpdateDelete,
-  selectedDomainId,
-  setSelectedDomainId,
-}) => {
+const DomainRow = ({ id, name, openModal, setModalType }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const onEditHandler = () => {
-    setUpdateDelete(true);
-    setSelectedDomainValue(domainName);
-    setSelectedDomainId(domainId);
-    openModal(domainId);
-    dispatch(setSelectedDomain({ id: domainId, value: domainName }));
+    dispatch(setSelectedDomain({ id: id, value: name }));
+    setModalType(UPDATE_DOMAIN);
+    openModal();
   };
 
   const onDeleteHandler = () => {
-    setUpdateDelete(false);
-    setSelectedDomainValue(domainName);
-    setSelectedDomainId(domainId);
-    openModal(domainId);
-
-    dispatch(setSelectedDomain({ id: domainId, value: domainName }));
+    dispatch(setSelectedDomain({ id: id, value: name }));
+    setModalType(DELETE_DOMAIN);
+    openModal();
   };
 
   return (
     <div className={styles.domainRow}>
-      <Button variant="outlined">{domainName}</Button>
+      <Button variant="outlined" onClick={() => navigate(`/domains/${id}`)}>
+        {name}
+      </Button>
       <Button variant="outlined" onClick={onEditHandler}>
         <CreateIcon />
       </Button>
@@ -47,4 +39,4 @@ const Domain = ({
   );
 };
 
-export default Domain;
+export default DomainRow;

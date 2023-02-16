@@ -1,5 +1,6 @@
 .home {
   margin: 2rem 0;
+  color: #555;
 }
 
 .list {
@@ -9,16 +10,6 @@
 
 .list li {
   margin: 1rem 0;
-}
-
-.domainRow {
-  display: flex;
-  gap: 1rem;
-  width: 100%;
-}
-
-.domainRow button:first-child {
-  flex-grow: 1;
 }
 
 .header {
