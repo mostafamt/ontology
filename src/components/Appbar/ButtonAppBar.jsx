@@ -35,6 +35,12 @@ export default function ButtonAppBar() {
         <Button color="inherit" onClick={() => navigate("/tree-ui")}>
           Tree UI
         </Button>
+        <Button color="inherit" onClick={() => navigate("/sortable-tree")}>
+          Sortable Tree
+        </Button>
+        <Button color="inherit" onClick={() => navigate("/table")}>
+          Table
+        </Button>
         <Button color="inherit">Login</Button>
       </Toolbar>
     </AppBar>
